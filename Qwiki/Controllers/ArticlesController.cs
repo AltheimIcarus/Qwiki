@@ -21,12 +21,22 @@ namespace Qwiki.Controllers
             _context = context;
         }
 
-        // GET: Articles
-        public async Task<IActionResult> Index()
+        // GET & FILTER: Articles
+        public async Task<IActionResult> Index(DateTime? exactDate = null)
         {
-            return _context.Articles != null ?
-                        View(await _context.Articles.ToListAsync()) :
-                        Problem("Entity set 'ApplicationDbContext.Articles'  is null.");
+            if (_context.Articles == null)
+                return Problem("Entity set 'ApplicationDbContext.Articles'  is null.");
+
+            if (exactDate == null || !exactDate.HasValue)
+                return View(await _context.Articles.ToListAsync());
+
+            var articles = from d in _context.Articles select d;
+            articles = articles.Where(a => a.Published.Date == exactDate.Value.Date);
+
+            if (articles == null)
+                return NotFound();
+
+            return View(await articles.ToListAsync());
         }
 
         public async Task<IActionResult> Search(string? searchArticle, DateTime? startDate = null, DateTime? endDate = null)

@@ -54,3 +54,14 @@
 }
     </tbody>
 </table>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const startDate = moment.utc(urlParams.get('startDate')).format('YYYY-MM-DD HH:mm');
+        const endDate = moment.utc(urlParams.get('endDate')).format('YYYY-MM-DD HH:mm');
+        $('input#dateRange').val(startDate + ' - ' + endDate);
+        $('input[name="searchArticle"]').val(urlParams.get('searchArticle'));
+    });
+</script>

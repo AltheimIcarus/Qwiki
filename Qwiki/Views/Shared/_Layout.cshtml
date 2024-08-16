@@ -35,7 +35,7 @@
                             <form asp-controller="Articles" asp-action="Search" method="get">
                                 <div class="row">
                                     <div class="col-7 search-col">
-                                        <input class="form-control search-bar" type="text" name="searchArticle"/>
+                                        <input class="form-control search-bar" type="text" name="searchArticle" />
                                     </div>
                                     <div class="col-4 search-col">
                                         <input class="form-control search-datetime" type="text" id="dateRange" value="Between Dates" />
@@ -88,11 +88,11 @@
             });
 
             $('input#dateRange').on('apply.daterangepicker', function (ev, picker) {
-                let st = picker.startDate.format('YYYY-MM-DD hh:mm');
-                let ed = picker.endDate.format('YYYY-MM-DD hh:mm');
-                $(this).val(st + ' - ' + ed);
-                $('input[name="startDate"').val(st);
-                $('input[name="endDate"').val(ed);
+                let startDate = picker.startDate.format('YYYY-MM-DD hh:mm');
+                let endDate = picker.endDate.format('YYYY-MM-DD hh:mm');
+                $(this).val(startDate + ' - ' + endDate);
+                $('input[name="startDate"').val(startDate);
+                $('input[name="endDate"').val(endDate);
                 //console.log("Verify: " + $('input[name="startDate"').val() + ' to ' + $('input[name="endDate"').val());
             });
             $('input#dateRange').on('cancel.daterangepicker', function (ev, picker) {
@@ -101,6 +101,7 @@
                 $('input[name="endDate"').val('');
                 //console.log("Verify: " + $('input[name="startDate"').val() + ' to ' + $('input[name="endDate"').val());
             });
+            
         });
     </script>
     
