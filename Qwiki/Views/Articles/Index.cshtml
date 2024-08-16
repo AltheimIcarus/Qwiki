@@ -68,3 +68,13 @@
 }
     </tbody>
 </table>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/daterangepicker/moment.min.js"></script>
+<script>
+    $(function () {
+        let url_params = new URLSearchParams(window.location.search);
+        let exactDate = moment(url_params.get('exactDate')).format('YYYY-MM-DD');
+        $('input[name="exactDate"]').val(exactDate);
+    });
+</script>
