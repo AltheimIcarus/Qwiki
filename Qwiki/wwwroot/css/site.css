@@ -1,0 +1,115 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+li.nav-item {
+    height: inherit;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.search-form {
+    margin: auto;
+    width: 50%;
+}
+
+.search-col {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+input.search-bar {
+    float: left;
+    border-radius: 20px;
+    background: transparent;
+    margin: auto;
+}
+
+button.search-btn {
+    float: left;
+    border: none;
+    background: transparent;
+    height: 40px;
+}
+
+div.search-group {
+    width: 40%;
+    padding-left: 2%;
+    padding-right: 2%;
+    float: left;
+    display: inline-block;
+}
+
+label.search-datetime-label {
+    text-align: right;
+    float: right;
+    border: none;
+}
+
+label.search-datetime-published-label {
+    border: none;
+    vertical-align: middle;
+}
+
+input.search-datetime {
+    text-align: center;
+    border-radius: 20px;
+    background-image: url('../images/fa-calendar.svg');
+    background-repeat: no-repeat;
+    background-position: 95% center;
+    background-size: auto 50%;
+}
+
+.search-datetime-index {
+    text-align: center;
+    border-radius: 20px;
+    background: transparent;
+}
+
+.thumbnail-article {
+    background-color: black;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin: 0px;
+    padding: 0px;
+}
+
+.thumbnail-article-detail {
+    background-color: black;
+    width: 150px;
+    height: 150px;
+    display: block;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin: 0px;
+    padding: 0px;
+}
+
+table.article-list > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.article-list-content {
+    max-height: 100px;
+    overflow-y: auto;
+}

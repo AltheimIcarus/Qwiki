@@ -1,0 +1,24 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "library": "simplemde@1.11.2",
+      "destination": "wwwroot/lib/simplemde/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "daterangepicker@3.1.0",
+      "destination": "wwwroot/lib/daterangepicker/",
+      "files": [
+        "bower.json",
+        "daterangepicker.min.js",
+        "daterangepicker.min.css",
+        "moment.min.js",
+        "package.min.js",
+        "website.min.css",
+        "website.min.js"
+      ]
+    }
+  ]
+}
