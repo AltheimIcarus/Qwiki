@@ -33,7 +33,7 @@
             @Html.DisplayNameFor(model => model.Content)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Content)
+            <textarea id="tiny" class="form-control">@Html.DisplayFor(model => model.Content)</textarea>
         </dd>
     </dl>
 </div>
@@ -41,3 +41,18 @@
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts {
+    <script src="~/lib/simplemde/dist/simplemde.min.js"></script>
+    <script>
+        var simplemde = new SimpleMDE({
+            element: document.getElementById("tiny"),
+            toolbar: false,
+        });
+        simplemde.togglePreview();
+    </script>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/lib/simplemde/dist/simplemde.min.css" />
+}

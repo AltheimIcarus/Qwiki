@@ -1,3 +1,53 @@
+:root {
+    --base-color: hsl(4 91 27);
+    --primary: hsl(from var(--base-color) h s l);
+    --secondary: hsl(from var(--primary) calc(h + 60) s calc(l + 38));
+    --accent: hsl(from var(--primary) calc(h + 79) s 40);
+    --accent2: hsl(from var(--accent) calc(h - 60) s l);
+    --text: hsl(from var(--primary) h calc(s - 2) 7);
+    --background: hsl(from var(--primary) calc(h - 4) calc(s - 11) 98);
+    --bs-primary-rgb: rgb(from var(--primary) r g b);
+    --bs-secondary-rgb: rgb(from var(--secondary) r g b);
+    --bs-body-color-rgb: rgb(from var(--text) r g b);
+    --bs-body-bg-rgb: rgb(from var(--background) r g b);
+}
+
+:root[data-theme="light"] {
+    --primary:      hsl(from var(--base-color) h s l);
+    --secondary:    hsl(from var(--primary) calc(h + 60) s calc(l + 38));
+    --accent:       hsl(from var(--primary) calc(h + 79) s 40);
+    --accent2:      hsl(from var(--accent) calc(h - 60) s l);
+    --text:         hsl(from var(--primary) h calc(s - 2) 7);
+    --background:   hsl(from var(--primary) calc(h - 4) calc(s - 11) 98);
+    --bs-primary-rgb:   rgb(from var(--primary) r g b);
+    --bs-secondary-rgb: rgb(from var(--secondary) r g b);
+    --bs-body-color-rgb:rgb(from var(--text) r g b);
+    --bs-body-bg-rgb:   rgb(from var(--background) r g b);
+}
+
+:root[data-theme="dark"] {
+    --primary:      hsl(from var(--base-color) h s calc(100 - l));
+    --secondary:    hsl(from var(--primary) calc(h + 60) s calc(l - 38));
+    --accent:       hsl(from var(--primary) calc(h + 79) s 60);
+    --accent2:      hsl(from var(--accent) calc(h - 60) s l);
+    --text:         hsl(from var(--primary) h calc(s - 2) 93);
+    --background:   hsl(from var(--primary) calc(h - 4) calc(s - 8) 2);
+}
+
+@font-face {
+    font-family: 'nf-body';
+    src: url('../font/itim-regular-webfont.woff2') format('woff2'), url('../font/itim-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'nf-header';
+    src: url('../font/petit_cochon-webfont.woff2') format('woff2'), url('../font/petit_cochon-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html {
   font-size: 14px;
 }
@@ -14,7 +64,26 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: var(--background);
+    color: var(--text);
+    font-family: 'nf-body', 'Comic Sans MS';
+}
+
+a {
+    color: var(--accent);
+}
+
+a:focus,
+a:hover,
+a:active,
+a:visited {
+    color: var(--accent2);
+}
+
+h1, h2, h3, h4, th {
+    color: var(--primary);
+    font-family: 'nf-header';
 }
 
 li.nav-item {
