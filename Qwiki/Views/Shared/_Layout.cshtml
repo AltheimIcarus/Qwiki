@@ -64,7 +64,6 @@
         </main>
     </div>
 
-    <div class="shimeji-wrapper"><img class="shimeji" src="data:image/gif;base64,R0lGODlhAQABAPcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAP8ALAAAAAABAAEAAAgEAP8FBAA7"</div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
@@ -76,6 +75,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/daterangepicker/moment.min.js"></script>
     <script src="~/lib/daterangepicker/daterangepicker.min.js"></script>
+    <script src="~/js/Shimeji.standalone.js"></script>
     <script>
         $(function () {
             // daterange picker
@@ -116,6 +116,24 @@
                 console.log('here');
                 meow.currentTime = 0;
                 meow.play();
+            });
+
+            var shimejiInstance = new ShimejiController({
+                shimejiOptions: {
+                    animate: true,
+                    draggable: true,
+                    move: true,
+                    chaseFood: true,
+                    duplicable: true,
+                    stayInWindow: true,
+                    showMenu: true,
+                },
+                foodOptions: {
+                    dropFood: true,
+                    stayInWindow: true,
+                },
+                autoSpawnShimeji: false,
+                spawnInteral: 3,
             });
         });
     </script>

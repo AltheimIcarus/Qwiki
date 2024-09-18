@@ -74,7 +74,9 @@
 <script>
     $(function () {
         let url_params = new URLSearchParams(window.location.search);
-        let exactDate = moment(url_params.get('exactDate')).format('YYYY-MM-DD');
-        $('input[name="exactDate"]').val(exactDate);
+        if (url_params.size > 0) {
+            let exactDate = moment(url_params.get('exactDate')).format('YYYY-MM-DD');
+            $('input[name="exactDate"]').val(exactDate);
+        }
     });
 </script>
