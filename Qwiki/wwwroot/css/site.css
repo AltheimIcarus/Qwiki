@@ -81,9 +81,18 @@ a:visited {
     color: var(--accent2);
 }
 
-h1, h2, h3, h4, th {
+h1, h2, h3, h4, th, nav {
     color: var(--primary);
     font-family: 'nf-header';
+}
+
+nav {
+    font-family: 'nf-body', 'Comic Sans MS';
+    background-color: var(--background) !important;
+}
+
+a.navbar-brand {
+    color: var(--primary);
 }
 
 li.nav-item {
