@@ -19,6 +19,11 @@
         "website.min.css",
         "website.min.js"
       ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "bootstrap@5.3.3",
+      "destination": "wwwroot/lib/bootstrap/dist/"
     }
   ]
 }
