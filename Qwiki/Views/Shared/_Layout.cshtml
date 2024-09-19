@@ -12,12 +12,12 @@
     @RenderSection("styles", false)
 </head>
 <body>
-    <audio id="meow" src="~/sounds/meow.mp3" preload="auto">
+    <audio id="meow" src="~/sounds/purr.mp3" preload="auto">
         Your browser does not support the
         <code>audio</code> element.
     </audio>
     <header>
-        <nav class="navbar sticky-top navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+        <nav class="navbar sticky-top navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <img id="meowLogo" class="nav-logo" src="data:image/gif;base64,R0lGODlhAQABAPcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAP8ALAAAAAABAAEAAAgEAP8FBAA7" />
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Qwiki</a>
@@ -76,7 +76,10 @@
     <script src="~/lib/daterangepicker/moment.min.js"></script>
     <script src="~/lib/daterangepicker/daterangepicker.min.js"></script>
     <script src="~/js/Shimeji.standalone.js"></script>
-    <script>
+    <script type="module">
+        // doodle style underline, border text-decorations library
+        import { annotate } from "/js/rough-notation.esm.js";
+
         $(function () {
             // daterange picker
             $('input#dateRange').daterangepicker({
@@ -118,6 +121,7 @@
                 meow.play();
             });
 
+            // Shimeji mascot controller
             var shimejiInstance = new ShimejiController({
                 shimejiOptions: {
                     animate: true,
@@ -134,6 +138,35 @@
                 },
                 autoSpawnShimeji: false,
                 spawnInteral: 3,
+            });
+
+            // link doodle styled underline
+            const style = getComputedStyle(document.documentElement);
+            const accentColor = style.getPropertyValue('--accent');
+            const accentColor2 = style.getPropertyValue('--accent2');
+            const links = Array.from(document.querySelectorAll('a:not(.nav-link, .navbar-brand)'));
+            
+            const linkAnnotations = Array(links.length).fill(undefined);
+            links.forEach((link, index) => {
+                linkAnnotations[index] = annotate(link, { 
+                    type: 'underline',
+                    color: accentColor,
+                    padding: -2,
+                    animate: true,
+                    animationDuration: 200,
+                    iterations: 1
+                });
+                linkAnnotations[index].show();
+                link.addEventListener('mouseover', () => {
+                    linkAnnotations[index].hide();
+                    linkAnnotations[index].color = accentColor2;
+                    linkAnnotations[index].show();
+                });
+                link.addEventListener('mouseleave', () => {
+                    linkAnnotations[index].hide();
+                    linkAnnotations[index].color = accentColor;
+                    linkAnnotations[index].show();
+                });
             });
         });
     </script>

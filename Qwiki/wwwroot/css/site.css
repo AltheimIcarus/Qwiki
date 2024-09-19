@@ -1,3 +1,21 @@
+@media (min-width:320px) { /* smartphones, iPhone, portrait 480x320 phones */
+}
+
+@media (min-width:481px) { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+}
+
+@media (min-width:641px) { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+
+@media (min-width:961px) { /* tablet, landscape iPad, lo-res laptops ands desktops */
+}
+
+@media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */
+}
+
+@media (min-width:1281px) { /* hi-res laptops and desktops */
+}
+
 :root {
     --base-color: hsl(4 91 27);
     --primary: hsl(from var(--base-color) h s l);
@@ -72,6 +90,7 @@ body {
 
 a {
     color: var(--accent);
+    text-decoration: none;
 }
 
 a:focus,
@@ -81,9 +100,14 @@ a:visited {
     color: var(--accent2);
 }
 
-h1, h2, h3, h4, th, nav {
+h1, h2, th, nav {
     color: var(--primary);
     font-family: 'nf-header';
+}
+
+h3, h4 {
+    color: var(--secondary);
+    font-weight: bold;
 }
 
 nav {
@@ -92,13 +116,48 @@ nav {
 }
 
 a.navbar-brand {
-    color: var(--primary);
+    color: var(--primary) !important;
+    background: none;
+}
+
+a.navbar-brand::after {
+    content: "";
+    background: none;
 }
 
 li.nav-item {
     height: inherit;
     margin-top: auto;
     margin-bottom: auto;
+}
+
+a.nav-link {
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: .15em;
+    position: relative;
+    display: inline-block;
+    padding: 5px 20px;
+}
+
+/* create an underline content that shows on hover */
+a.nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    display: block;
+    /* backward compatibility */
+    background: none repeat scroll 0 0 transparent;
+    height: 2px;
+    width: 0;
+    background: linear-gradient(to left, #f69ec4, #f9dd94 100%);
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+}
+
+a.nav-link:hover::after {
+    width: 100%;
+    left: 0;
 }
 
 img.nav-logo {
@@ -123,6 +182,11 @@ img.nav-logo:hover {
     width: 50%;
 }
 
+.form-control:focus {
+    border-color: rgba(from var(--secondary) r g b / 1);
+    box-shadow: 0 0 0 .25rem rgba(from var(--secondary) r g b /.25);
+}
+
 .search-col {
     margin-top: auto;
     margin-bottom: auto;
@@ -140,6 +204,13 @@ button.search-btn {
     border: none;
     background: transparent;
     height: 40px;
+    padding: 0;
+}
+
+button.search-btn > i:hover {
+    background-color: transparent;
+    filter: drop-shadow(0 0 6px var(--secondary));
+    color: var(--accent);
 }
 
 div.search-group {
@@ -200,6 +271,15 @@ input.search-datetime {
     padding: 0px;
 }
 
+table.article-list {
+        table-layout: fixed;
+}
+@media (min-width:641px) {
+    table.article-list {
+        table-layout: auto;
+    }
+}
+
 table.article-list > tbody > tr > td {
     vertical-align: middle;
 }
@@ -207,4 +287,8 @@ table.article-list > tbody > tr > td {
 .article-list-content {
     max-height: 100px;
     overflow-y: auto;
+}
+
+svg.rough-annotation {
+    position: absolute;
 }
