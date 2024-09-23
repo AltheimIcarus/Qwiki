@@ -70,6 +70,7 @@
         </tbody>
     </table>
 </div> *@
+
 <div class="container-fluid" style="margin-top: 20px;">
     <div class="row row-cols-2 row-cols-md-5 g-4">
         @foreach (var item in Model)
@@ -86,6 +87,13 @@
                 </div>
                 <div class="card-back">
                     <p class="card-text">@Html.DisplayFor(modelItem => item.Content)</p>
+                    <div class="card-footer">
+                        <nav class="nav nav-pills flex-column flex-sm-row">
+                            <a class="flex-sm-fill text-sm-center nav-link article-card-ctrl" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="flex-sm-fill text-sm-center nav-link article-card-ctrl" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a class="flex-sm-fill text-sm-center nav-link article-card-ctrl" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </nav>
+                    </div>
                 </div>
             </div>    
         }

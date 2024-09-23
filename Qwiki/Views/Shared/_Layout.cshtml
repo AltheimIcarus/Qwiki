@@ -28,13 +28,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1 nav-underline">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="Index">Articles</a>
+                            <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="Index">Articles</a>
                         </li>
                         <li class="nav-item container">
                             <form asp-controller="Articles" asp-action="Search" method="get">
@@ -53,6 +53,15 @@
                                 </div>
                             </form>
                         </li>
+                        <li class="nav-item row theme-toggle">
+                            <div class="col-1 theme-colorpicker-container">
+                                <input type="color" class="theme-colorpicker" id="theme-colorpicker" name="theme-colorpicker" value="#FFFFFF" />
+                            </div>
+                            <div class="col-1">
+                                <i class="dark-mode-toggle fa-solid fa-toggle-off active" id="dark-mode-off"></i>
+                                <i class="dark-mode-toggle fa-solid fa-toggle-on" id="dark-mode-on"></i>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -63,7 +72,7 @@
             @RenderBody()
         </main>
     </div>
-
+    
 
     <footer class="border-top footer text-muted">
         <div class="container">
@@ -76,9 +85,11 @@
     <script src="~/lib/daterangepicker/moment.min.js"></script>
     <script src="~/lib/daterangepicker/daterangepicker.min.js"></script>
     <script src="~/js/Shimeji.standalone.js"></script>
+    <script src="~/js/color-converter.js"></script>
     <script type="module">
         // doodle style underline, border text-decorations library
         import { annotate } from "/js/rough-notation.esm.js";
+        var style = getComputedStyle(document.documentElement);
 
         $(function () {
             // daterange picker
@@ -113,6 +124,84 @@
                 //console.log("Verify: " + $('input[name="startDate"').val() + ' to ' + $('input[name="endDate"').val());
             });
 
+            // theme colorpicker
+            const primaryColor = HslColor.fromStr(style.getPropertyValue('--base-color'));
+            $('#theme-colorpicker').val(primaryColor.toHex());
+
+            // theme update
+            const getStoredTheme = () => localStorage.getItem('theme');
+            const setStoredTheme = theme => localStorage.setItem('theme', theme);
+            /**
+             * Utility function to calculate the current theme setting.
+             * Look for a local storage value.
+             * Fall back to system setting.
+             * Fall back to light mode.
+             **/
+            const getPreferredTheme = () => {
+                const storedTheme = getStoredTheme()
+                if (storedTheme) {
+                    return storedTheme;
+                }
+
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            const setTheme = theme => {
+                setStoredTheme(theme);
+                document.querySelector("html").setAttribute("data-theme", theme);
+            }
+
+
+            const handleThemeUpdate = (hex) => {
+                const root = document.querySelector(':root');
+                const baseColorHex = new HexColor(hex);
+                const baseColorRGB = RgbaColor.fromArr( baseColorHex.toRgb() ); // for alpha transparency
+                const BaseColorHSL = HslColor.fromArr( baseColorHex.toHsl() ); // for easier hue rotation
+
+                let bgColorLightHSL = HslColor.fromArr( [BaseColorHSL.h - 4, BaseColorHSL.s - 11, 98] );
+                let bgColorDarkHSL = HslColor.fromArr( [BaseColorHSL.h - 4, BaseColorHSL.s - 11, 2] );
+                root.style.setProperty('--base-color', BaseColorHSL.toStr());
+                const mode = getPreferredTheme(); // get current light or dark mode
+                const lightContrast = contrast(baseColorRGB.toRgbArr(), bgColorLightHSL.toRgb());
+                const darkContrast = contrast(baseColorRGB.toRgbArr(), bgColorDarkHSL.toRgb());
+                // console.log(lightContrast, ' ', darkContrast);
+                // if light mode and contrast ratio above 7 (AAA grade)
+                if (mode === 'light' && lightContrast < 6) {
+                    // change to opposite mode for higher contrast
+                    setTheme('dark');
+                    isDarkMode = 'dark';
+                }
+                if (mode === 'dark' && darkContrast < 6) {
+                    // change to opposite mode for higher contrast
+                    setTheme('light');
+                    isDarkMode = 'light';
+                }
+            }
+
+
+
+            // dark mode toggle
+            let isDarkMode = getPreferredTheme();
+            if (isDarkMode === 'dark') {
+                $('i#dark-mode-on').addClass('active').show();
+                $('i#dark-mode-off').removeClass('active').hide();
+            } else {
+                $('i#dark-mode-off').addClass('active').show();
+                $('i#dark-mode-on').removeClass('active').hide();
+            }
+            $('i.dark-mode-toggle.active').siblings().hide();
+            $('i.dark-mode-toggle').click(function () {
+                $(this).toggleClass('active').hide();
+                $(this).siblings().toggleClass('active').show();
+                const newTheme = isDarkMode === 'dark'? 'light' : 'dark';
+                setTheme(newTheme);
+                isDarkMode = newTheme;
+            });
+
+            // user select theme color
+            $('#theme-colorpicker').change(function() {
+                handleThemeUpdate($(this).val());
+            });
+
             // logo meow on hover
             const meow = $('#meow').get(0);
             $('img#meowLogo').on('mouseenter', function () {
@@ -120,6 +209,7 @@
                 meow.currentTime = 0;
                 meow.play();
             });
+
 
             // Shimeji mascot controller
             var shimejiInstance = new ShimejiController({
@@ -140,12 +230,11 @@
                 spawnInteral: 3,
             });
 
-            // link doodle styled underline
-            const style = getComputedStyle(document.documentElement);
+            // link doodle styled underline            
             const accentColor = style.getPropertyValue('--accent');
             const accentColor2 = style.getPropertyValue('--accent2');
-            const links = Array.from(document.querySelectorAll('a:not(.nav-link, .navbar-brand)'));
-            
+            const links = Array.from(document.querySelectorAll('a:not(.nav-link, .navbar-brand, .article-card-ctrl)'));
+
             const linkAnnotations = Array(links.length).fill(undefined);
             links.forEach((link, index) => {
                 linkAnnotations[index] = annotate(link, { 
@@ -159,12 +248,12 @@
                 linkAnnotations[index].show();
                 link.addEventListener('mouseover', () => {
                     linkAnnotations[index].hide();
-                    linkAnnotations[index].color = accentColor2;
+                    linkAnnotations[index].color = style.getPropertyValue('--accent2');
                     linkAnnotations[index].show();
                 });
                 link.addEventListener('mouseleave', () => {
                     linkAnnotations[index].hide();
-                    linkAnnotations[index].color = accentColor;
+                    linkAnnotations[index].color = style.getPropertyValue('--accent');
                     linkAnnotations[index].show();
                 });
             });
