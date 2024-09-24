@@ -17,7 +17,7 @@
         <code>audio</code> element.
     </audio>
     <header>
-        <nav class="navbar sticky-top navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+        <nav class="navbar sticky-top navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
             <img id="meowLogo" class="nav-logo" src="data:image/gif;base64,R0lGODlhAQABAPcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAP8ALAAAAAABAAEAAAgEAP8FBAA7" />
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Qwiki</a>
@@ -53,11 +53,11 @@
                                 </div>
                             </form>
                         </li>
-                        <li class="nav-item row theme-toggle">
+                        <li class="nav-item row justify-content-end theme-toggle">
                             <div class="col-1 theme-colorpicker-container">
                                 <input type="color" class="theme-colorpicker" id="theme-colorpicker" name="theme-colorpicker" value="#FFFFFF" />
                             </div>
-                            <div class="col-1">
+                            <div class="col-1 dark-mode-toggle-container">
                                 <i class="dark-mode-toggle fa-solid fa-toggle-off active" id="dark-mode-off"></i>
                                 <i class="dark-mode-toggle fa-solid fa-toggle-on" id="dark-mode-on"></i>
                             </div>
@@ -68,15 +68,69 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <div class="row">
+            <div class="col-1">
+                <div style="display: inline-block; width: 20px; height: 20px; border: 1px solid black; background-color: var(--primary);"></div>
+                <p style="display: inline-block;">primary</p>
+            </div>
+            <div class="col-1">
+                <div style="display: inline-block; width: 20px; height: 20px; border: 1px solid black; background-color: var(--secondary);"></div>
+                <p style="display: inline-block;">secondary</p>
+            </div>
+            <div class="col-1">
+                <div style="display: inline-block; width: 20px; height: 20px; border: 1px solid black; background-color: var(--tertiary);"></div>
+                <p style="display: inline-block;">tertiary</p>
+            </div>
+            <div class="col-1">
+                <div style="display: inline-block; width: 20px; height: 20px; border: 1px solid black; background-color: var(--accent);"></div>
+                <p style="display: inline-block;">accent</p>
+            </div>
+            <div class="col-1">
+                <div style="display: inline-block; width: 20px; height: 20px; border: 1px solid black; background-color: var(--accent2);"></div>
+                <p style="display: inline-block;">accent2</p>
+            </div>
+            <div class="col-1">
+                <div style="display: inline-block; width: 20px; height: 20px; border: 1px solid black; background-color: var(--text);"></div>
+                <p style="display: inline-block;">text</p>
+            </div>
+            <div class="col-1">
+                <div style="display: inline-block; width: 20px; height: 20px; border: 1px solid black; background-color: var(--background);"></div>
+                <p style="display: inline-block;">background</p>
+            </div>
+            <div class="col-1">
+                <div style="display: inline-block; width: 20px; height: 20px; border: 1px solid black; background-color: var(--shade);"></div>
+                <p style="display: inline-block;">shade</p>
+            </div>
+            <div class="col-1">
+                <div style="display: inline-block; width: 20px; height: 20px; border: 1px solid black; background-color: var(--bs-primary);"></div>
+                <p style="display: inline-block;">bs-primary</p>
+            </div>
+            <div class="col-1">
+                <div style="display: inline-block; width: 20px; height: 20px; border: 1px solid black; background-color: var(--bs-success);"></div>
+                <p style="display: inline-block;">bs-success</p>
+            </div>
+            <div class="col-1">
+                <div style="display: inline-block; width: 20px; height: 20px; border: 1px solid black; background-color: var(--bs-info);"></div>
+                <p style="display: inline-block;">bs-info</p>
+            </div>
+            <div class="col-1">
+                <div style="display: inline-block; width: 20px; height: 20px; border: 1px solid black; background-color: var(--bs-warning);"></div>
+                <p style="display: inline-block;">bs-warning</p>
+            </div>
+            <div class="col-1">
+                <div style="display: inline-block; width: 20px; height: 20px; border: 1px solid black; background-color: var(--bs-danger);"></div>
+                <p style="display: inline-block;">bs-danger</p>
+            </div>
+        </div>
+        <main role="main" class="pb-5">
             @RenderBody()
         </main>
     </div>
     
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer text-muted">
         <div class="container">
-            &copy; 2024 - Qwiki - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - Qwiki - <a class="footer-privacy-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -175,19 +229,28 @@
                     setTheme('light');
                     isDarkMode = 'light';
                 }
+                updateDarkModeToggle();
             }
 
 
 
             // dark mode toggle
             let isDarkMode = getPreferredTheme();
-            if (isDarkMode === 'dark') {
-                $('i#dark-mode-on').addClass('active').show();
-                $('i#dark-mode-off').removeClass('active').hide();
-            } else {
-                $('i#dark-mode-off').addClass('active').show();
-                $('i#dark-mode-on').removeClass('active').hide();
+            const updateDarkModeToggle = theme => {
+                const mode = getPreferredTheme();
+                if (theme)
+                    mode = theme;
+                
+                if (mode === 'dark') {
+                    $('i#dark-mode-on').addClass('active').show();
+                    $('i#dark-mode-off').removeClass('active').hide();
+                } else {
+                    $('i#dark-mode-off').addClass('active').show();
+                    $('i#dark-mode-on').removeClass('active').hide();
+                }
+                return;
             }
+            updateDarkModeToggle();
             $('i.dark-mode-toggle.active').siblings().hide();
             $('i.dark-mode-toggle').click(function () {
                 $(this).toggleClass('active').hide();
@@ -233,7 +296,7 @@
             // link doodle styled underline            
             const accentColor = style.getPropertyValue('--accent');
             const accentColor2 = style.getPropertyValue('--accent2');
-            const links = Array.from(document.querySelectorAll('a:not(.nav-link, .navbar-brand, .article-card-ctrl)'));
+            const links = Array.from(document.querySelectorAll('a:not(.nav-link, .navbar-brand, .article-card-ctrl, .footer-privacy-link)'));
 
             const linkAnnotations = Array(links.length).fill(undefined);
             links.forEach((link, index) => {
