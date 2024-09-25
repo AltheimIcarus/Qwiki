@@ -15,8 +15,10 @@
             <label class="search-datetime-published-label">Published On: </label>
         </div>
         <div class="row">
-            <div class="col-4">
-                <input class="form-control search-datetime-index" type="date" asp-format="{0:yyyy-MM-dd}" name="exactDate" />
+            <div class="col-4 search-datetime-index-container">
+                <input id="dateFilter" type="text" class="form-control search-datetime-index" placeholder="mm/dd/yyyy" />
+                <input hidden type="date" asp-format="{0:yyyy-MM-dd}" name="exactDate" value="" />
+                <i class="search-datetime-index-icon fa-duotone fa-solid fa-calendar-days"></i>
             </div>
             <div class="col-1">
                 <button class="form-control search-btn" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -108,6 +110,36 @@
         if (url_params.size > 0) {
             let exactDate = moment(url_params.get('exactDate')).format('YYYY-MM-DD');
             $('input[name="exactDate"]').val(exactDate);
+            $('input#dateFilter').val(exactDate);
+        } else {
+            $(this).val('mm/dd/yyyy');
         }
+
+        // date filter
+        $('input#dateFilter').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            opens: 'left',
+            autoUpdateInput: false,
+            minYear: 1901,
+            maxYear: parseInt(moment().format('YYYY'), 10),
+            locale: {
+                format: 'YYYY-MM-DD',
+            }
+        }, function (start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD'));
+        });
+
+        $('input#dateFilter').on('apply.daterangepicker', function (ev, picker) {
+            let startDate = picker.startDate.format('YYYY-MM-DD');
+            $(this).val(startDate);
+            $('input[name="exactDate"').val(startDate);
+            //console.log("Verify: " + $('input[name="startDate"').val() + ' to ' + $('input[name="endDate"').val());
+        });
+        $('input#dateFilter').on('cancel.daterangepicker', function (ev, picker) {
+            $(this).val('mm/dd/yyyy');
+            $('input[name="exactDate"').val('');
+            //console.log("Verify: " + $('input[name="startDate"').val() + ' to ' + $('input[name="endDate"').val());
+        });
     });
 </script>
