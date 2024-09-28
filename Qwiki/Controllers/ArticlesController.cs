@@ -69,19 +69,38 @@ namespace Qwiki.Controllers
         }
 
         // GET: Articles/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Articles == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null || _context.Articles == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var article = await _context.Articles
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (article == null)
-            {
+        //    var article = await _context.Articles
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (article == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(article);
+        //}
+
+        // GET: Articles/Details/title
+        [Route("article/{title?}")]
+        public async Task<IActionResult> Details(string? title)
+        {
+            if (_context.Articles == null)
                 return NotFound();
-            }
+
+            if (string.IsNullOrEmpty(title))
+                return RedirectToAction(nameof(Index));
+
+            title = title.ToLower().Trim();
+            var article = await _context.Articles.FirstOrDefaultAsync(d => d.Title.ToLower().Contains(title) || d.Content.ToLower().Contains(title));
+
+            if (article == null)
+                return NotFound();
 
             return View(article);
         }

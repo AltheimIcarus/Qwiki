@@ -19,6 +19,7 @@ namespace Qwiki.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Article>().HasKey(e => e.Id);
+            modelBuilder.Entity<Article>().HasIndex(e => e.Title).IsUnique();
             //e.g. modelBuilder.Entity<Super>().HasOne(p => p.child).WithMany(s => s.siblings).HasForeignKey();
 
             modelBuilder.Entity<Article>().HasData(

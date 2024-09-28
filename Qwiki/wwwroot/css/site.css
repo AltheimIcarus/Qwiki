@@ -8,7 +8,7 @@
     --text: hsl(from var(--primary) h calc(s - 2) 7);
     --background: hsl(from var(--primary) calc(h - 4) calc(s - 11) 98);
     --background2: hsl(from var(--primary) calc(h - 4) calc(s - 11) 90);
-    --shade:        rgba(0 0 0 / 0.3);
+    --shade: rgba(0 0 0 / 0.3);
     /* min-width breakpoints */
     --breakpoint-xs: 0;
     --breakpoint-sm: 576px;
@@ -17,12 +17,13 @@
     --breakpoint-xl: 1200px;
     --breakpoint-xxl: 1400px;
     /* button and background */
-    --bs-primary:   var(--primary);
+    --bs-primary: var(--primary);
     --bs-secondary: var(--secondary);
-    --bs-success:   hsl(from var(--primary) 145 s l); /* green */
-    --bs-info:      hsl(from var(--tertiary) h s l); /* tertiary */
-    --bs-warning:   hsl(from var(--primary) 39 s l); /* yellow */
-    --bs-danger:    hsl(from var(--primary) 4 100 l); /* red */
+    --bs-success: hsl(from var(--primary) 145 s l); /* green */
+    --bs-info: hsl(from var(--tertiary) h s l); /* tertiary */
+    --bs-warning: hsl(from var(--primary) 39 s l); /* yellow */
+    --bs-danger: hsl(from var(--primary) 4 100 l); /* red */
+    --bs-btn-active-bg: var(--tertiary);
 }
 
 :root[data-theme="light"] {
@@ -41,6 +42,7 @@
     --bs-info:      hsl(from var(--tertiary) h s l); /* tertiary */
     --bs-warning:   hsl(from var(--primary) 39 s l); /* yellow */
     --bs-danger:    hsl(from var(--primary) 4 100 l); /* red */
+    --bs-btn-active-bg: var(--tertiary);
 }
 
 :root[data-theme="dark"] {
@@ -60,35 +62,36 @@
     --bs-info:      hsl(from var(--tertiary) h s l); /* tertiary */
     --bs-warning:   hsl(from var(--primary) 34 s l); /* yellow */
     --bs-danger:    hsl(from var(--primary) 4 100 l); /* red */
+    --bs-btn-active-bg: var(--tertiary);
 }
 
 @font-face {
     font-family: 'nf-body';
-    src: url('../font/itim-regular-webfont.woff2') format('woff2'), url('../font/itim-regular-webfont.woff') format('woff');
+    src: url('../font/handwriting-regular-webfont.woff2') format('woff2'), url('../font/handwriting-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'nf-header';
-    src: url('../font/petit_cochon-webfont.woff2') format('woff2'), url('../font/petit_cochon-webfont.woff') format('woff');
+    src: url('../font/soda_cream-webfont.woff2') format('woff2'), url('../font/soda_cream-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
-html {
-    font-size: 14px;
+@font-face {
+    font-family: 'nf-subheader';
+    src: url('../font/Baby.woff2') format('woff2'), url('../font/Baby.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
-@media (min-width: var(--breakpoint-md)) {
-    html {
-        font-size: 16px;
-    }
-}
+
 
 html {
     position: relative;
     min-height: 100%;
+    font-size: 16px;
 }
 
 body {
@@ -96,7 +99,7 @@ body {
     /*    background-color: var(--background);*/
     background: linear-gradient(to bottom, var(--background), var(--background), var(--background2)), url('../images/noise.svg');
     color: var(--text);
-    font-family: 'nf-body', 'Comic Sans MS';
+    font-family: nf-body, 'Comic Sans MS';
 }
 body::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0 0 0 / 0.3);
@@ -119,6 +122,8 @@ body::-webkit-scrollbar-thumb {
 a {
     color: var(--accent);
     text-decoration: none;
+    font-family: nf-body, 'Comic Sans MS';
+    font-size: 140%;
 }
 
 a:focus,
@@ -135,12 +140,32 @@ a:hover {
 
 h1, h2, h5, th, nav {
     color: var(--primary);
-    font-family: 'nf-header';
+    font-family: 'nf-header', 'Arial Rounded MT';
 }
 
 h3, h4 {
     color: var(--tertiary);
     font-weight: bold;
+    font-family: 'nf-subheader', 'Comic Sans MS';
+}
+
+label, span, dt {
+    font-weight: bold;
+    font-family: 'nf-subheader', 'Comic Sans MS';
+}
+
+.form-control,
+dd,
+p {
+    font-family: nf-body, 'Comic Sans MS';
+}
+p {
+    font-size: 140%;
+}
+
+small {
+    font-family: nf-subheader, 'Comic Sans MS';
+    font-size: 80%;
 }
 
 input::placeholder {
@@ -160,11 +185,11 @@ input::placeholder {
 
 /* main styling */
 .text-muted {
-    color: rgba(from var(--tertiary) r g b / 0.35) !important;
+    color: rgba(from var(--tertiary) r g b / 0.65) !important;
 }
 
 header > nav {
-    font-family: 'nf-body', 'Comic Sans MS';
+    font-family: 'nf-subheader', 'Comic Sans MS';
     background-color: var(--background) !important;
     border-bottom: 5px dotted rgba(from var(--primary) r g b / .7);
 }
@@ -172,6 +197,9 @@ header > nav {
 a.navbar-brand {
     color: var(--primary) !important;
     background: none;
+    font-family: nf-subheader, 'Comic Sans MS';
+    font-weight: bold;
+    font-size: 160%;
 }
 
 a.navbar-brand::after {
@@ -195,6 +223,7 @@ header > nav > div > div > ul > li > a.nav-link {
     border: none;
     border-color: transparent;
     color: var(--accent2);
+    font-family: nf-subheader, 'Comic Sans MS';
 }
 
 /* create an underline content that shows on hover */
@@ -294,36 +323,45 @@ input[type=color].theme-colorpicker {
 
 .form-control {
     border: 1px solid rgba(from var(--primary) r g b / .35);
+    height: 100%;
+    background-color: transparent;
+    color: var(--text);
+    font-family: nf-subheader, 'Comic Sans MS';
+    font-size: 100%;
 }
 
 .form-control:hover {
     box-shadow: 0 0 0 .25rem rgba(from var(--primary) r g b /.25);
 }
 
-.form-control:focus {
+.form-control:not(:read-only):focus {
     border-color: rgba(from var(--secondary) r g b / 1);
     box-shadow: 0 0 0 .25rem rgba(from var(--secondary) r g b /.25);
     color: var(--text);
     background-color: transparent;
 }
 
-.form-control.search-datetime,
-.form-control.search-datetime-index,
-input.search-bar {
-    color: var(--text);
-    background-color: transparent;
-}
-.form-control.search-datetime:active,
-.form-control.search-datetime-index:active,
-input.search-bar:active {
+.form-control:active {
     color: var(--text);
     background-color: transparent;
 }
 
-.search-col {
+.form-control:read-only:not(button) {
+    background-color: rgba(from var(--shade) r g b / 0.1) !important;
+    color: rgba(from var(--text) r g b / 0.75);
+}
+
+.form-control:read-only:focus {
+    border-color: rgba(from var(--bs-danger) r g b / 1);
+    box-shadow: 0 0 0 .25rem rgba(from var(--bs-danger) r g b /.25);
+    color: rgba(from var(--text) r g b / 0.75);
+    background-color: transparent;
+}
+
+/*.search-col {
     margin-top: auto;
     margin-bottom: auto;
-}
+}*/
 
 input.search-bar {
     float: left;
@@ -371,6 +409,11 @@ button.navbar-toggler:focus {
     color: var(--text);
     background-color: var(--secondary);
     border-color: var(--secondary);
+}
+.btn-primary:active {
+    color: var(--text);
+    background-color: var(--tertiary) !important;
+    border-color: var(--tertiary) !important;
 }
 .btn-check:focus + .btn, .btn:focus {
     outline: 0;
@@ -435,6 +478,7 @@ footer {
     border-top: 5px dotted rgba(from var(--primary) r g b / .7);
 }
 
+
 /* Theme color demos */
 div.theme-demo {
     position: relative;
@@ -493,27 +537,6 @@ p.theme-demo-text {
     padding: 0px;
 }
 
-table.article-list {
-    table-layout: fixed;
-}
-@media (min-width: var(--breakpoint-sm)) {
-    table.article-list {
-        table-layout: auto;
-    }
-}
-
-table.article-list > tbody > tr > td {
-    vertical-align: middle;
-}
-
-td.article-lists-row-title {
-    font-weight: bold;
-}
-
-td.article-lists-row-published {
-    font-size: small;
-}
-
 /* Article cards styling */
 .card-flip {
     -webkit-perspective: 1000;
@@ -570,6 +593,7 @@ td.article-lists-row-published {
 a.article-card-ctrl {
     color: var(--accent);
     text-decoration: none;
+    font-size: 140%;
 }
 a.article-card-ctrl:focus,
 a.article-card-ctrl:active,
@@ -579,7 +603,7 @@ a.article-card-ctrl:visited {
 a.article-card-ctrl:hover {
     filter: drop-shadow(0 1px 5px var(--accent));
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 145%;
     color: var(--accent2);
 }
 
@@ -769,6 +793,96 @@ a.article-card-ctrl:hover {
     overflow-y: auto;
 }
 
+
+/* Edit Article page */
+input.edit-article-published {
+    font-size: 100%;
+    background-color: transparent;
+}
+
+
+/* Rough Annotation scribble style */
 svg.rough-annotation {
     position: absolute;
+}
+
+/* Datarangepicker calendar style */
+div.daterangepicker {
+    color: var(--text) !important;
+    background-color: rgba(from var(--background) r g b / 0.6) !important;
+    border: 1px solid var(--primary) !important;
+}
+
+div.daterangepicker .calendar-table {
+    background-color: transparent !important;
+    border-color: transparent;
+    font-family: nf-header, 'Comic Sans MS';
+}
+
+.daterangepicker td.active, .daterangepicker td.active:hover,
+.daterangepicker td.end-date.in-range {
+    background-color: rgba(from var(--secondary) r g b / 0.7) !important;
+    border-color: transparent;
+    color: var(--text) !important;
+}
+
+.daterangepicker td.off, .daterangepicker td.off.end-date, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date {
+    background-color: rgba(from var(--shade) r g b / 0.1) !important;
+    border-color: transparent;
+    color: var(--text) !important;
+}
+
+.daterangepicker td.available:hover, .daterangepicker th.available:hover {
+    background-color: rgba(from var(--secondary) r g b / 0.5) !important;
+    border-color: transparent;
+    color: var(--text) !important;
+}
+
+.daterangepicker td.in-range {
+    background-color: rgba(from var(--secondary) r g b / 0.2) !important;
+    border-color: transparent;
+    color: var(--text) !important;
+    border-radius: 0;
+}
+
+.daterangepicker .drp-selected {
+    font-size: 100% !important;
+}
+
+.daterangepicker .drp-buttons {
+    border-top: 1px solid var(--primary) !important;
+}
+
+div.daterangepicker .drp-buttons .btn-default {
+    color: var(--bs-danger) !important;
+}
+
+.daterangepicker:before {
+    border-bottom: 7px solid var(--primary) !important;
+}
+
+.daterangepicker:after {
+    border-bottom: 6px solid var(--primary) !important;
+}
+
+/* Simplemde markdown editor style */
+div.editor-toolbar {
+    border-top: 1px solid rgba(from var(--primary) r g b / .35) !important;
+    border-left: 1px solid rgba(from var(--primary) r g b / .35) !important;
+    border-right: 1px solid rgba(from var(--primary) r g b / .35) !important;
+    background-color: rgba(from var(--shade) r g b / 0.3) !important;
+}
+
+.editor-toolbar a::before {
+    color: var(--text) !important;
+}
+
+div.CodeMirror:has(div.editor-preview) {
+    background: rgba(from var(--shade) r g b / 0.1) !important;
+    color: rgba(from var(--shade) r g b / 0) !important;
+}
+
+div.editor-preview, .editor-preview-side {
+    background: rgba(from var(--shade) r g b / 0.1) !important;
+    color: var(--text) !important;
 }

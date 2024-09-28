@@ -6,21 +6,20 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<a asp-action="Create">Create New</a>
+
 <div class="container">
     <form asp-controller="Articles" asp-action="Index" method="get" class="article-list-search-form">
-        <div class="col-3">
+        <div class="col-12 col-md-3">
             <label class="search-datetime-published-label">Published On: </label>
         </div>
         <div class="row">
-            <div class="col-4 search-datetime-index-container">
+            <div class="col-10 col-md-4 search-datetime-index-container">
                 <input id="dateFilter" type="text" class="form-control search-datetime-index" placeholder="mm/dd/yyyy" />
                 <input hidden type="date" asp-format="{0:yyyy-MM-dd}" name="exactDate" value="" />
                 <i class="search-datetime-index-icon fa-duotone fa-solid fa-calendar-days"></i>
             </div>
-            <div class="col-1">
+            <div class="col-2 col-md-1">
                 <button class="form-control search-btn" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
             </div>
         </div>
@@ -91,9 +90,9 @@
                     <p class="card-text">@Html.DisplayFor(modelItem => item.Content)</p>
                     <div class="card-footer">
                         <nav class="nav nav-pills flex-column flex-sm-row">
-                            <a class="flex-sm-fill text-sm-center nav-link article-card-ctrl" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                            <a class="flex-sm-fill text-sm-center nav-link article-card-ctrl" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            <a class="flex-sm-fill text-sm-center nav-link article-card-ctrl" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <a class="flex-sm-fill text-sm-center nav-link article-card-ctrl" asp-controller="Articles" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="flex-sm-fill text-sm-center nav-link article-card-ctrl" asp-controller="Articles" asp-action="Details" asp-route-title="@item.Title">Details</a>
+                            <a class="flex-sm-fill text-sm-center nav-link article-card-ctrl" asp-controller="Articles" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                         </nav>
                     </div>
                 </div>

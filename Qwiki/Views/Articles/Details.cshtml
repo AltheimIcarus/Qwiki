@@ -14,13 +14,17 @@
             @Html.DisplayNameFor(model => model.Title)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
+            <h4>
+                @Html.DisplayFor(model => model.Title)
+            </h4>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Published)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Published)
+            <span>
+                @Html.DisplayFor(model => model.Published)
+            </span>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Thumbnail)
@@ -37,8 +41,8 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+<div class="d-flex justify-content-center align-items-center">
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>&nbsp;|&nbsp;
     <a asp-action="Index">Back to List</a>
 </div>
 
