@@ -14,6 +14,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         )
 );
 
+// routing
+//builder.Services.AddMvc()
+//    .AddRazorPagesOptions(options => {
+//        options.Conventions.AddPageRoute("/Articles/Details", "{title?}");
+//    });
+
 // add login functionalities
 //builder.Services.AddIdentityCore<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false);
 builder.Services.AddControllersWithViews();
