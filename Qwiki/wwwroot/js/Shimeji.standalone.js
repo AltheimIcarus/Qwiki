@@ -1092,7 +1092,7 @@ class Shimeji extends BoundedHTMLElement {
         x = x * x;
         y = y * y;
         let dist = Math.sqrt(x + y);
-        if (this.closestFoodDistance !== null && this.closestFoodDistance < dist) {
+        if (this.closestFoodDistance !== null && this.closestFoodDistance <= dist) {
             return;
         }
         if (this.isChasingFood && this.closestFoodId === food.target.id) // avoid repetition of function invocation
@@ -1171,15 +1171,16 @@ class Shimeji extends BoundedHTMLElement {
             await sleep(FPS_INTERVAL_FALLING);
         }
         
+        if (this.closestFoodId !== food.target.id)
+            return; // change target food
         if (this.closestFoodId === food.target.id && food.target.canEat() && !this.#isDragged && success) {
             await this.eatDroppedFood(food.target);
         }
-        if (!this.isChasingFood || !success) {
-            this.isChasingFood = false;
-            this.closestFoodDistance = null;
-            this.closestFoodId = null;
-            await this.nextAction(ACTIONS.standing);
-        }
+        this.isChasingFood = false;
+        this.closestFoodDistance = null;
+        this.closestFoodId = null;
+        await this.nextAction(ACTIONS.standing);
+
         return;
     }
 

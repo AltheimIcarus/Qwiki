@@ -28,7 +28,7 @@ namespace Qwiki.Controllers
                 return Problem("Entity set 'ApplicationDbContext.Articles'  is null.");
 
             if (exactDate == null || !exactDate.HasValue)
-                return View(await _context.Articles.ToListAsync());
+                return View(await _context.Articles.OrderByDescending(a => a.Published).Take(50).ToListAsync());
 
             var articles = from d in _context.Articles select d;
             articles = articles.Where(a => a.Published.Date == exactDate.Value.Date);
