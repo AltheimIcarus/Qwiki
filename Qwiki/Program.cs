@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using NodaTime;
 using Qwiki.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         config.GetConnectionString("DefaultConnection")
         )
 );
+
+// Add NodaTime clock
+builder.Services.AddSingleton<IClock>(SystemClock.Instance);
 
 // add login functionalities
 //builder.Services.AddIdentityCore<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false);

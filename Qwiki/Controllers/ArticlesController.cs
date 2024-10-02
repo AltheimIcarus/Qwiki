@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NodaTime;
 using Qwiki.Models;
 
 namespace Qwiki.Controllers
@@ -15,10 +16,12 @@ namespace Qwiki.Controllers
     public class ArticlesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IClock _clock;
 
-        public ArticlesController(ApplicationDbContext context)
+        public ArticlesController(ApplicationDbContext context, IClock clock)
         {
             _context = context;
+            _clock = clock;
         }
 
         // GET & FILTER: Articles
@@ -28,10 +31,10 @@ namespace Qwiki.Controllers
                 return Problem("Entity set 'ApplicationDbContext.Articles'  is null.");
 
             if (exactDate == null || !exactDate.HasValue)
-                return View(await _context.Articles.OrderByDescending(a => a.Published).Take(50).ToListAsync());
+                return View(await _context.Articles.OrderByDescending(a => a.PublishedUtc).Take(50).ToListAsync());
 
             var articles = from d in _context.Articles select d;
-            articles = articles.Where(a => a.Published.Date == exactDate.Value.Date);
+            articles = articles.Where(a => a.PublishedUtc.Date == exactDate.Value.Date);
 
             if (articles == null)
                 return NotFound();
@@ -47,13 +50,13 @@ namespace Qwiki.Controllers
 
             if (startDate.HasValue && endDate.HasValue)
             {
-                articles = articles.Where(a => a.Published >= startDate && a.Published <= endDate);
+                articles = articles.Where(a => a.PublishedUtc >= startDate && a.PublishedUtc <= endDate);
             } else if (endDate.HasValue)
             {
-                articles = articles.Where(a => a.Published <= endDate);
+                articles = articles.Where(a => a.PublishedUtc <= endDate);
             } else if (startDate.HasValue)
             {
-                articles = articles.Where(a => a.Published >= startDate);
+                articles = articles.Where(a => a.PublishedUtc >= startDate);
             }
 
             if (!string.IsNullOrEmpty(searchArticle))
@@ -106,20 +109,18 @@ namespace Qwiki.Controllers
         }
 
         // GET: Articles/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() => View();
 
         // POST: Articles/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Published,Thumbnail,Content")] Article article)
+        public async Task<IActionResult> Create([Bind("Id,Title,Thumbnail,Content")] Article article)
         {
             if (ModelState.IsValid)
             {
+                article.Published = _clock.GetCurrentInstant();
                 _context.Add(article);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -223,9 +224,6 @@ namespace Qwiki.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ArticleExists(int id)
-        {
-            return (_context.Articles?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        private bool ArticleExists(int id) => (_context.Articles?.Any(e => e.Id == id)).GetValueOrDefault();
     }
 }
