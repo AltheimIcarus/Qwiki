@@ -4,40 +4,49 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Article</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Published)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Published)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Thumbnail)
-        </dt>
-        <dd class = "col-sm-10">
-            <div class="thumbnail-article-detail" style="background-image: url(@Model.Thumbnail)"></div>
-            <a href="@Model.Thumbnail" target="_blank">@Html.DisplayFor(model => model.Thumbnail)</a>
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-    </dl>
+
+<div class="container">
+
+    <div class="row">
+        <div class = "col-12 col-sm-10 align-self-end">
+            <h1>@Html.DisplayFor(model => model.Title)</h1>
+            <span>
+                Created on: @Model.PublishedUtc.ToLongDateString(), @Model.PublishedUtc.ToShortTimeString()
+            </span>
+        </div>
+        <div class = "col-6 col-sm-2 justify-content-end">
+            <a href="@Model.Thumbnail" target="_blank" class="thumbnail-link">
+                <div class="thumbnail-article-detail" style="background-image: url(@Model.Thumbnail)"></div>
+            </a>
+        </div>
+
+        <div class="col-sm-12 justify-content-center"><hr /></div>
+        
+        <div class="col-sm-12 article-detail-content">
+            <textarea id="tiny" class="form-control">@Html.DisplayFor(model => model.Content)</textarea>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+<div class="d-flex justify-content-center align-items-center">
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>&nbsp;|&nbsp;
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts {
+    <script src="~/lib/simplemde/dist/simplemde.min.js"></script>
+    <script>
+        var simplemde = new SimpleMDE({
+            element: document.getElementById("tiny"),
+            toolbar: false,
+        });
+        simplemde.togglePreview();
+
+        var contentDiv = document.getElementsByClassName('CodeMirror')[0];
+        contentDiv.style.height = (contentDiv.offsetHeight + 1000) + "px";
+    </script>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/lib/simplemde/dist/simplemde.min.css" />
+}

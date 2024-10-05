@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Reflection
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,46 +14,59 @@
     @RenderSection("styles", false)
 </head>
 <body>
-    <audio id="meow" src="~/sounds/meow.mp3" preload="auto">
+    <audio id="meow" src="~/sounds/purr.mp3" preload="auto">
         Your browser does not support the
         <code>audio</code> element.
     </audio>
     <header>
-        <nav class="navbar sticky-top navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar sticky-top navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
             <img id="meowLogo" class="nav-logo" src="data:image/gif;base64,R0lGODlhAQABAPcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAP8ALAAAAAABAAEAAAgEAP8FBAA7" />
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Qwiki</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <i class="fa-solid fa-bars"></i>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1 nav-underline">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="Index">Articles</a>
+                            <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="Index">Articles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Theme">Theme</a>
                         </li>
                         <li class="nav-item container">
                             <form asp-controller="Articles" asp-action="Search" method="get">
-                                <div class="row">
-                                    <div class="col-7 search-col">
+                                <div class="row gy-2">
+                                    <div class="col-12 col-md-7 search-col">
                                         <input class="form-control search-bar" type="text" name="searchArticle" />
                                     </div>
-                                    <div class="col-4 search-col">
+                                    <div class="col-10 col-md-4 search-col search-datetime-container">
                                         <input class="form-control search-datetime" type="text" id="dateRange" value="Between Dates" />
                                         <input hidden type="datetime-local" asp-format="{0:yyyy-MM-dd hh:mm}" name="startDate" value="" />
                                         <input hidden type="datetime-local" asp-format="{0:yyyy-MM-dd hh:mm}" name="endDate" value="" />
+                                        <i class="search-datetime-icon fa-duotone fa-solid fa-calendar-days"></i>
                                     </div>
-                                    <div class="col-1 search-col">
+                                    <div class="col-2 col-md-1 search-col">
                                         <button class="form-control search-btn" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                             </form>
+                        </li>
+                        <li class="nav-item row justify-content-end theme-toggle">
+                            <div class="col-1 theme-colorpicker-container">
+                                <input type="color" class="theme-colorpicker" id="theme-colorpicker" name="theme-colorpicker" value="#FFFFFF" />
+                            </div>
+                            <div class="col-1 dark-mode-toggle-container">
+                                <i class="dark-mode-toggle fa-solid fa-toggle-off active" id="dark-mode-off"></i>
+                                <i class="dark-mode-toggle fa-solid fa-toggle-on" id="dark-mode-on"></i>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -59,16 +74,15 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-5">
             @RenderBody()
         </main>
     </div>
+    
 
-    <div class="shimeji-wrapper"><img class="shimeji" src="data:image/gif;base64,R0lGODlhAQABAPcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAP8ALAAAAAABAAEAAAgEAP8FBAA7"</div>
-
-    <footer class="border-top footer text-muted">
+    <footer class="footer text-muted">
         <div class="container">
-            &copy; 2024 - Qwiki - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - Qwiki v@(Assembly.GetExecutingAssembly().GetName().Version) - <a class="footer-privacy-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -76,7 +90,13 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/daterangepicker/moment.min.js"></script>
     <script src="~/lib/daterangepicker/daterangepicker.min.js"></script>
-    <script>
+    <script src="~/js/Shimeji.standalone.js"></script>
+    <script src="~/js/color-converter.js"></script>
+    <script type="module">
+        // doodle style underline, border text-decorations library
+        import { annotate } from "/js/rough-notation.esm.js";
+        var style = getComputedStyle(document.documentElement);
+
         $(function () {
             // daterange picker
             $('input#dateRange').daterangepicker({
@@ -110,12 +130,149 @@
                 //console.log("Verify: " + $('input[name="startDate"').val() + ' to ' + $('input[name="endDate"').val());
             });
 
+            // theme colorpicker
+            const primaryColor = HslColor.fromStr(style.getPropertyValue('--base-color'));
+            $('#theme-colorpicker').val(primaryColor.toHex());
+
+            // theme update
+            const getStoredTheme = () => localStorage.getItem('theme');
+            const setStoredTheme = theme => localStorage.setItem('theme', theme);
+            /**
+             * Utility function to calculate the current theme setting.
+             * Look for a local storage value.
+             * Fall back to system setting.
+             * Fall back to light mode.
+             **/
+            const getPreferredTheme = () => {
+                const storedTheme = getStoredTheme()
+                if (storedTheme) {
+                    return storedTheme;
+                }
+
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            const setTheme = theme => {
+                setStoredTheme(theme);
+                document.querySelector("html").setAttribute("data-theme", theme);
+            }
+
+            // dark mode toggle    
+            const updateDarkModeToggle = theme => {
+                setTheme(theme);
+                if (theme === 'light') {
+                    $('i#dark-mode-on').removeClass('active').hide();
+                    $('i#dark-mode-off').addClass('active').show();
+                } else {
+                    $('i#dark-mode-off').removeClass('active').hide();
+                    $('i#dark-mode-on').addClass('active').show();
+                }
+                return;
+            }
+
+            updateDarkModeToggle(getPreferredTheme());
+            $('i.dark-mode-toggle').click(function () {
+                const newTheme = getPreferredTheme() === 'dark'? 'light' : 'dark';
+                setTheme(newTheme);
+                updateDarkModeToggle(newTheme);
+            });
+
+            const updateTheme = hex => {
+                const root = document.querySelector(':root');
+                const baseColorHex = new HexColor(hex);
+                const baseColorRGB = RgbaColor.fromArr(baseColorHex.toRgb()); // for alpha transparency
+                const baseColorHSL = HslColor.fromArr(baseColorHex.toHsl()); // for easier hue rotation
+                const baseColorInverseHSL = HslColor.fromArr([baseColorHSL.h, baseColorHSL.s, 100 - baseColorHSL.l]); // inverse luminance of base color
+
+                const bgColorLightHSL = HslColor.fromArr([baseColorHSL.h - 4, baseColorHSL.s - 11, 98]);
+                const bgColorDarkHSL = HslColor.fromArr([baseColorHSL.h - 4, baseColorHSL.s - 11, 2]);
+                
+                const mode = getPreferredTheme(); // get current light or dark mode
+                const lightContrast = contrast(baseColorRGB.toRgbArr(), bgColorLightHSL.toRgb());
+                const darkContrast = contrast(baseColorRGB.toRgbArr(), bgColorDarkHSL.toRgb());
+                // if light mode and contrast ratio above 7 (AAA grade)
+                console.log(mode);
+                console.log(baseColorHSL.toStr(), baseColorInverseHSL.toStr());
+                console.log(lightContrast, darkContrast);
+                if (mode === 'light') {
+                    if (lightContrast < 6) {
+                        // change to opposite mode for higher contrast
+                        root.style.setProperty('--base-color', baseColorInverseHSL.toStr());
+                        updateDarkModeToggle('dark');
+                        return;
+                    }
+                    root.style.setProperty('--base-color', baseColorHSL.toStr());
+                    return;
+                }
+                if (mode === 'dark') {
+                    root.style.setProperty('--base-color', baseColorInverseHSL.toStr());
+                    if (darkContrast < 6) {
+                        // change to opposite mode for higher contrast
+                        console.log(darkContrast);
+                        updateDarkModeToggle('light');
+                        return;
+                    }
+                    return;
+                }
+            }
+
+            // user select theme color
+            $('#theme-colorpicker').change(function () {
+                updateTheme($(this).val());
+            });
+
             // logo meow on hover
             const meow = $('#meow').get(0);
             $('img#meowLogo').on('mouseenter', function () {
-                console.log('here');
                 meow.currentTime = 0;
                 meow.play();
+            });
+
+
+            // Shimeji mascot controller
+            var shimejiInstance = new ShimejiController({
+                shimejiOptions: {
+                    animate: true,
+                    draggable: true,
+                    move: true,
+                    chaseFood: true,
+                    duplicable: true,
+                    stayInWindow: true,
+                    showMenu: true,
+                },
+                foodOptions: {
+                    dropFood: true,
+                    stayInWindow: true,
+                },
+                autoSpawnShimeji: false,
+                spawnInteral: 3,
+            });
+
+            // link doodle styled underline            
+            const accentColor = style.getPropertyValue('--accent');
+            const accentColor2 = style.getPropertyValue('--accent2');
+            const links = Array.from(document.querySelectorAll('a:not(.nav-link, .navbar-brand, .fa, .article-card-ctrl, .footer-privacy-link, .thumbnail-link)'));
+
+            const linkAnnotations = Array(links.length).fill(undefined);
+            links.forEach((link, index) => {
+                linkAnnotations[index] = annotate(link, { 
+                    type: 'underline',
+                    color: accentColor,
+                    padding: -2,
+                    animate: true,
+                    animationDuration: 200,
+                    iterations: 1
+                });
+                linkAnnotations[index].show();
+                link.addEventListener('mouseover', () => {
+                    linkAnnotations[index].hide();
+                    linkAnnotations[index].color = style.getPropertyValue('--accent2');
+                    linkAnnotations[index].show();
+                });
+                link.addEventListener('mouseleave', () => {
+                    linkAnnotations[index].hide();
+                    linkAnnotations[index].color = style.getPropertyValue('--accent');
+                    linkAnnotations[index].show();
+                });
             });
         });
     </script>

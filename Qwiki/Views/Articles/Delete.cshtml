@@ -15,31 +15,51 @@
             @Html.DisplayNameFor(model => model.Title)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
+            <h4>
+                @Html.DisplayFor(model => model.Title)
+            </h4>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Published)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Published)
+            <span>
+                @Model.PublishedUtc.ToLongDateString(), @Model.PublishedUtc.ToShortTimeString()
+            </span>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Thumbnail)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Thumbnail)
+            <div class="thumbnail-article-detail" style="background-image: url(@Model.Thumbnail)"></div>
+            <a href="@Model.Thumbnail" target="_blank">@Html.DisplayFor(model => model.Thumbnail)</a>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Content)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Content)
+            <textarea id="tiny" class="form-control">@Html.DisplayFor(model => model.Content)</textarea>
         </dd>
     </dl>
     
-    <form asp-action="Delete">
+    <form asp-action="Delete" class="d-flex justify-content-center align-items-center">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Delete" class="btn btn-danger" />&nbsp;|&nbsp;
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
+
+@section Scripts {
+    <script src="~/lib/simplemde/dist/simplemde.min.js"></script>
+    <script>
+        var simplemde = new SimpleMDE({
+            element: document.getElementById("tiny"),
+            toolbar: false,
+        });
+        simplemde.togglePreview();
+    </script>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/lib/simplemde/dist/simplemde.min.css" />
+}

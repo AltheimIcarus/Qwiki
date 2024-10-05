@@ -23,6 +23,11 @@ namespace Qwiki.Controllers
             return View();
         }
 
+        public IActionResult Theme()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

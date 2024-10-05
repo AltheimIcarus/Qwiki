@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using NodaTime;
+using NodaTime.Extensions;
 
 namespace Qwiki.Models
 {
@@ -13,8 +15,22 @@ namespace Qwiki.Models
         [Required, StringLength(1024)]
         public string Title { get; set; }
 
-        [Required]
-        public DateTime Published { get; set; } = DateTime.UtcNow;
+        public void SetPublishedTimeToNow(IClock clock)
+        {
+            Published = clock.GetCurrentInstant();
+        }
+
+        [NotMapped]
+        public Instant Published { get; set; }
+
+        [Obsolete("This property only exists for serialization purposes")]
+        [DataType(DataType.DateTime)]
+        [Column("Published")]
+        public DateTime PublishedUtc 
+        { 
+            get => Published.ToDateTimeUtc();
+            set => Published = DateTime.SpecifyKind(value, DateTimeKind.Utc).ToInstant(); 
+        }
 
         [DisplayName("Article Thumbnail URL"), Url]
         public string? Thumbnail { get; set; }

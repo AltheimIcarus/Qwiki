@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Qmenu": {
+    "Qwiki": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
