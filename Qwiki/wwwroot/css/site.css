@@ -527,8 +527,8 @@ p.theme-demo-text {
 
 .thumbnail-article-detail {
     background-color: black;
-    width: 150px;
-    height: 150px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
     display: block;
     background-size: cover;
     background-position: center center;
@@ -793,6 +793,10 @@ a.article-card-ctrl:hover {
     overflow-y: auto;
 }
 
+/* Article Detail page */
+div.article-detail-content > div.CodeMirror {
+    min-height: 600px;
+}
 
 /* Edit Article page */
 input.edit-article-published {
@@ -877,12 +881,35 @@ div.editor-toolbar {
     color: var(--text) !important;
 }
 
-div.CodeMirror:has(div.editor-preview) {
+/*div.CodeMirror:has(div.editor-preview) {
     background: rgba(from var(--shade) r g b / 0.1) !important;
     color: rgba(from var(--shade) r g b / 0) !important;
-}
+}*/
 
 div.editor-preview, .editor-preview-side {
-    background: rgba(from var(--shade) r g b / 0.1) !important;
+    background: rgba(from var(--background) r g b / 1) !important;
     color: var(--text) !important;
+}
+
+/*div.CodeMirror > div.CodeMirror-scroll > div.CodeMirror-sizer > 
+div > div.CodeMirror-lines > div > div.CodeMirror-code > pre.CodeMirror-line {
+    opacity: 1;
+}*/
+
+div.editor-preview::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0 0 0 / 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+div.editor-preview::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: #F5F5F5;
+}
+
+div.editor-preview::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0 0 0 / 0.3);
+    background-color: var(--accent);
 }

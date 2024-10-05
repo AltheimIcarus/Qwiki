@@ -250,7 +250,7 @@
             // link doodle styled underline            
             const accentColor = style.getPropertyValue('--accent');
             const accentColor2 = style.getPropertyValue('--accent2');
-            const links = Array.from(document.querySelectorAll('a:not(.nav-link, .navbar-brand, .fa, .article-card-ctrl, .footer-privacy-link)'));
+            const links = Array.from(document.querySelectorAll('a:not(.nav-link, .navbar-brand, .fa, .article-card-ctrl, .footer-privacy-link, .thumbnail-link)'));
 
             const linkAnnotations = Array(links.length).fill(undefined);
             links.forEach((link, index) => {

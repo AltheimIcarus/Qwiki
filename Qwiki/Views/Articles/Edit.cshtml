@@ -8,9 +8,9 @@
 
 <h4>Article</h4>
 <hr />
-<div class="row">
-    <div class="col-md-8">
-        <form asp-action="Edit">
+<form asp-action="Edit">
+    <div class="row">
+        <div class="col-12 col-sm-10">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -28,32 +28,46 @@
                 <input asp-for="Thumbnail" class="form-control" />
                 <span asp-validation-for="Thumbnail" class="text-danger"></span>
             </div>
+        </div>
+        
+        <div class="col-6 col-sm-2">
+            <a href="@Model.Thumbnail" target="_blank" class="thumbnail-link">
+                <div class="thumbnail-article-detail" style="background-image: url(@Model.Thumbnail)"></div>
+            </a>
+        </div>
+
+        <div class="col-sm-12">
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
                 <textarea id="tiny" class="form-control">@Html.DisplayFor(model => model.Content)</textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
-        </form>
-    </div>
-    <div class="col-4">
-        <div class="thumbnail-article-detail" style="background-image: url(@Model.Thumbnail)"></div>
-    </div>
-    <div class="d-flex justify-content-center align-items-center">
-        <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-primary" />&nbsp;|&nbsp;
-            <a asp-action="Index">Back to List</a>
         </div>
+    </div>
+</form>
+    
+<div class="d-flex justify-content-center align-items-center">
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />&nbsp;|&nbsp;
+        <a asp-action="Index">Back to List</a>
     </div>
 </div>
 
 @section Scripts {
     <script src="~/lib/simplemde/dist/simplemde.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
+
     <script>
-        var simplemde = new SimpleMDE();
+        var simplemde = new SimpleMDE({
+            renderingConfig: {
+                codeSyntaxHighlighting: true,
+            },
+        });
     </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
 @section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css">
     <link rel="stylesheet" href="~/lib/simplemde/dist/simplemde.min.css" />
 }
