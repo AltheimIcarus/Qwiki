@@ -82,7 +82,7 @@
 
     <footer class="footer text-muted">
         <div class="container">
-            &copy; 2024 - Qwiki v@(Assembly.GetExecutingAssembly().GetName().Version) - <a class="footer-privacy-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @DateTime.UtcNow.Year - Qwiki v@(Assembly.GetExecutingAssembly().GetName().Version) - <a class="footer-privacy-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
