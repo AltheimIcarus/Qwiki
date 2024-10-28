@@ -121,6 +121,11 @@ namespace Qwiki.Controllers
             if (ModelState.IsValid)
             {
                 article.Published = _clock.GetCurrentInstant();
+                if ( _context.Articles.Any(d => d.Title.ToLower() == article.Title.ToLower()) )
+                {
+                    ModelState.AddModelError("Title", $"The title '{article.Title}' already exists. Please choose another name");
+                    return View(article);
+                }
                 _context.Add(article);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
